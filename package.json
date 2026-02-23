@@ -9,7 +9,7 @@
     "db:migrate": "prisma migrate deploy",
     "db:studio": "prisma studio",
     "db:seed": "bun run prisma/seed/seed.ts",
-    "vercel-build": "prisma generate && bun build src/index.ts --outdir dist --target node"
+    "vercel-build": "prisma generate"
   },
   "type": "module",
   "dependencies": {
