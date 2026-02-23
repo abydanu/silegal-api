@@ -3,7 +3,7 @@ import { IMahasiswaAktifRepository } from "../../../domain/repositories/IMahasis
 export class DeleteMahasiswaAktifUseCase {
   constructor(private mahasiswaAktifRepository: IMahasiswaAktifRepository) {}
 
-  async execute(id: number) {
+  async execute(id: string) {
     const existing = await this.mahasiswaAktifRepository.findById(id);
     if (!existing) {
       throw new Error("Data tidak ditemukan");

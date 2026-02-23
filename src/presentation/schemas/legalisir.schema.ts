@@ -8,8 +8,18 @@ export const LegalisirSchema = z.object({
   nim: z.string().min(1).openapi({ example: "2021001" }),
   tgl_lahir: z.string().openapi({ example: "2000-05-20" }),
   tgl_kelulusan: z.string().openapi({ example: "2024-08-15" }),
-  program_studi: z.enum(["SISTEM_INFORMASI", "TEKNIK_INFORMATIKA", "MANAJEMEN_INFORMATIKA", "KOMPUTERISASI_AKUNTANSI"]),
-  fakultas: z.enum(["TEKNIK", "EKONOMI", "HUKUM", "PERTANIAN", "KEGURUAN"]),
+  program_studi: z.enum([
+    "ILMU_HUKUM",
+    "MANAJEMEN",
+    "AKUNTANSI",
+    "ADMINISTRASI_NEGARA",
+    "ILMU_KOMUNIKASI",
+    "AGROTEKNOLOGI",
+    "TEKNIK_MESIN",
+    "TEKNIK_SIPIL",
+    "MANAJEMEN_INFORMATIKA"
+  ]),
+  fakultas: z.enum(["HUKUM", "EKONOMI", "ILMU_SOSIAL_DAN_ILMU_POLITIK", "PERTANIAN", "TEKNIK"]),
   nomor_seri_ijazah: z.string().min(1).openapi({ example: "SI-2024-001" }),
   sebanyak_ijazah: z.number().int().min(0).default(0),
   sebanyak_transkip: z.number().int().min(0).default(0),
@@ -18,7 +28,7 @@ export const LegalisirSchema = z.object({
 });
 
 export const LegalisirResponseSchema = z.object({
-  id_data: z.number(),
+  id: z.string(),
   tanggal_pengajuan: z.string(),
   nomor_surat: z.string(),
   nama_mahasiswa: z.string(),

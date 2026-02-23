@@ -2,6 +2,7 @@ import { IMahasiswaAktifRepository } from "../../domain/repositories/IMahasiswaA
 import { MahasiswaAktif, CreateMahasiswaAktifDTO } from "../../domain/entities/MahasiswaAktif";
 import { prisma } from "../database/prisma";
 import logger from "../logging/logger";
+import { Semester } from "prisma/generated";
 
 export class PrismaMahasiswaAktifRepository implements IMahasiswaAktifRepository {
   async create(data: CreateMahasiswaAktifDTO): Promise<MahasiswaAktif> {
@@ -15,15 +16,15 @@ export class PrismaMahasiswaAktifRepository implements IMahasiswaAktifRepository
         nim: data.nim,
         tgl_lahir: new Date(data.tgl_lahir),
         alamat_rumah: data.alamat_rumah,
-        semester: data.semester,
+        semester: data.semester as Semester,
         program_studi: data.program_studi as any,
         fakultas: data.fakultas as any,
         thn_akademik: data.thn_akademik,
         keterangan_keperluan: data.keterangan_keperluan,
       },
     });
-    logger.info({ id: result.id_data }, "Mahasiswa aktif record created successfully");
-    return result;
+    logger.info({ id: result.id }, "Mahasiswa aktif record created successfully");
+    return result as MahasiswaAktif;
   }
 
   async findAll(page: number, limit: number, search: string) {
@@ -38,7 +39,7 @@ export class PrismaMahasiswaAktifRepository implements IMahasiswaAktifRepository
         }
       : {};
 
-    const [total, data] = await Promise.all([
+    const [total, items] = await Promise.all([
       prisma.dataPengajuan.count({ where }),
       prisma.dataPengajuan.findMany({
         where,
@@ -47,21 +48,21 @@ export class PrismaMahasiswaAktifRepository implements IMahasiswaAktifRepository
         take: limit,
       }),
     ]);
-    logger.info({ total, returned: data.length }, "Mahasiswa aktif records fetched");
-    return { data, total };
+    logger.info({ total, returned: items.length }, "Mahasiswa aktif records fetched");
+    return { data: items as MahasiswaAktif[], total };
   }
 
-  async findById(id: number): Promise<MahasiswaAktif | null> {
+  async findById(id: string): Promise<MahasiswaAktif | null> {
     logger.debug({ id }, "Fetching mahasiswa aktif by ID");
-    const result = await prisma.dataPengajuan.findUnique({ where: { id_data: id } });
+    const result = await prisma.dataPengajuan.findUnique({ where: { id } });
     logger.info({ id, found: !!result }, "Mahasiswa aktif fetch by ID completed");
-    return result;
+    return result as MahasiswaAktif | null;
   }
 
-  async update(id: number, data: Partial<CreateMahasiswaAktifDTO>): Promise<MahasiswaAktif> {
+  async update(id: string, data: Partial<CreateMahasiswaAktifDTO>): Promise<MahasiswaAktif> {
     logger.info({ id }, "Updating mahasiswa aktif record");
     const result = await prisma.dataPengajuan.update({
-      where: { id_data: id },
+      where: { id },
       data: {
         ...(data.tanggal_pengajuan && { tanggal_pengajuan: new Date(data.tanggal_pengajuan) }),
         ...(data.nomor_surat && { nomor_surat: data.nomor_surat }),
@@ -70,7 +71,7 @@ export class PrismaMahasiswaAktifRepository implements IMahasiswaAktifRepository
         ...(data.nim && { nim: data.nim }),
         ...(data.tgl_lahir && { tgl_lahir: new Date(data.tgl_lahir) }),
         ...(data.alamat_rumah && { alamat_rumah: data.alamat_rumah }),
-        ...(data.semester && { semester: data.semester }),
+        ...(data.semester && { semester: data.semester as Semester }),
         ...(data.program_studi && { program_studi: data.program_studi as any }),
         ...(data.fakultas && { fakultas: data.fakultas as any }),
         ...(data.thn_akademik && { thn_akademik: data.thn_akademik }),
@@ -78,12 +79,12 @@ export class PrismaMahasiswaAktifRepository implements IMahasiswaAktifRepository
       },
     });
     logger.info({ id }, "Mahasiswa aktif record updated successfully");
-    return result;
+    return result as MahasiswaAktif;
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: string): Promise<void> {
     logger.info({ id }, "Deleting mahasiswa aktif record");
-    await prisma.dataPengajuan.delete({ where: { id_data: id } });
+    await prisma.dataPengajuan.delete({ where: { id } });
     logger.info({ id }, "Mahasiswa aktif record deleted successfully");
   }
 
@@ -95,7 +96,7 @@ export class PrismaMahasiswaAktifRepository implements IMahasiswaAktifRepository
     return await prisma.dataPengajuan.findMany({
       orderBy: { tanggal_pengajuan: "desc" },
       take: limit,
-      select: { id_data: true, nama_mahasiswa: true, nim: true, tanggal_pengajuan: true, nomor_surat: true, semester: true },
-    }) as any;
+      select: { id: true, nama_mahasiswa: true, nim: true, tanggal_pengajuan: true, nomor_surat: true, semester: true },
+    }) as MahasiswaAktif[];
   }
 }

@@ -4,6 +4,7 @@ import { GetMahasiswaAktifListUseCase } from "../../application/use-cases/mahasi
 import { GetMahasiswaAktifByIdUseCase } from "../../application/use-cases/mahasiswa-aktif/GetMahasiswaAktifByIdUseCase";
 import { UpdateMahasiswaAktifUseCase } from "../../application/use-cases/mahasiswa-aktif/UpdateMahasiswaAktifUseCase";
 import { DeleteMahasiswaAktifUseCase } from "../../application/use-cases/mahasiswa-aktif/DeleteMahasiswaAktifUseCase";
+import { PrintMahasiswaAktifUseCase, PrintType } from "../../application/use-cases/mahasiswa-aktif/PrintMahasiswaAktifUseCase";
 import logger from "../../infrastructure/logging/logger";
 
 export class MahasiswaAktifController {
@@ -12,7 +13,8 @@ export class MahasiswaAktifController {
     private getMahasiswaAktifListUseCase: GetMahasiswaAktifListUseCase,
     private getMahasiswaAktifByIdUseCase: GetMahasiswaAktifByIdUseCase,
     private updateMahasiswaAktifUseCase: UpdateMahasiswaAktifUseCase,
-    private deleteMahasiswaAktifUseCase: DeleteMahasiswaAktifUseCase
+    private deleteMahasiswaAktifUseCase: DeleteMahasiswaAktifUseCase,
+    private printMahasiswaAktifUseCase: PrintMahasiswaAktifUseCase
   ) {}
 
   async create(c: Context) {
@@ -20,13 +22,13 @@ export class MahasiswaAktifController {
       const body = await c.req.json();
       logger.info({ nim: body.nim }, "Creating mahasiswa aktif request");
       const created = await this.createMahasiswaAktifUseCase.execute(body);
-      logger.info({ id: created.id_data }, "Mahasiswa aktif request created");
+      logger.info({ id: created.id }, "Mahasiswa aktif request created");
       return c.json(
         {
           success: true,
           message: "Permohonan berhasil dikirim",
           data: {
-            id_data: created.id_data,
+            id: created.id,
             nomor_surat: created.nomor_surat,
             nama_mahasiswa: created.nama_mahasiswa,
             createdAt: created.createdAt,
@@ -56,7 +58,7 @@ export class MahasiswaAktifController {
 
   async getById(c: Context) {
     try {
-      const id = Number(c.req.param("id"));
+      const id = c.req.param("id");
       logger.debug({ id }, "Fetching mahasiswa aktif by ID");
       const item = await this.getMahasiswaAktifByIdUseCase.execute(id);
       return c.json({ success: true, data: item });
@@ -68,7 +70,7 @@ export class MahasiswaAktifController {
 
   async update(c: Context) {
     try {
-      const id = Number(c.req.param("id"));
+      const id = c.req.param("id");
       const body = await c.req.json();
       logger.info({ id }, "Updating mahasiswa aktif");
       const updated = await this.updateMahasiswaAktifUseCase.execute(id, body);
@@ -83,7 +85,7 @@ export class MahasiswaAktifController {
 
   async delete(c: Context) {
     try {
-      const id = Number(c.req.param("id"));
+      const id = c.req.param("id");
       logger.info({ id }, "Deleting mahasiswa aktif");
       await this.deleteMahasiswaAktifUseCase.execute(id);
       logger.info({ id }, "Mahasiswa aktif deleted successfully");
@@ -91,6 +93,36 @@ export class MahasiswaAktifController {
     } catch (err: any) {
       const status = err.message === "Data tidak ditemukan" ? 404 : 500;
       logger.error({ id: c.req.param("id"), error: err.message }, "Failed to delete mahasiswa aktif");
+      return c.json({ success: false, message: err.message }, status);
+    }
+  }
+
+  async print(c: Context) {
+    try {
+      const id = c.req.param("id");
+      const type = c.req.query("type") as PrintType || "status-aktif";
+      
+      logger.info({ id, type }, "Generating PDF for mahasiswa aktif");
+      
+      const mahasiswaData = await this.getMahasiswaAktifByIdUseCase.execute(id);
+      
+      const pdfBuffer = await this.printMahasiswaAktifUseCase.execute(id, type);
+      
+      logger.info({ id, type }, "PDF generated successfully");
+      
+      const uint8Array = new Uint8Array(pdfBuffer);
+      
+      const sanitizedNama = mahasiswaData.nama_mahasiswa
+        .replace(/[^a-zA-Z0-9\s-]/g, '')
+        .replace(/\s+/g, '-');
+      
+      return c.newResponse(uint8Array, 200, {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": `attachment; filename="surat-keterangan-${type}-${sanitizedNama}.pdf"`,
+      });
+    } catch (err: any) {
+      const status = err.message === "Data tidak ditemukan" ? 404 : 500;
+      logger.error({ id: c.req.param("id"), error: err.message }, "Failed to generate PDF");
       return c.json({ success: false, message: err.message }, status);
     }
   }

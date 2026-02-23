@@ -8,8 +8,12 @@ export const swaggerDocument = {
   servers: [
     {
       url: "http://localhost:5000",
-      description: "Development server",
+      description: "Local server",
     },
+    ...(process.env.SKIP_NGROK !== "true" ? [{
+      url: "https://suited-enormously-donkey.ngrok-free.app",
+      description: "Development server",
+    }] : []),
   ],
   components: {
     securitySchemes: {
@@ -47,7 +51,7 @@ export const swaggerDocument = {
               admin: {
                 type: "object",
                 properties: {
-                  id_admin: { type: "number" },
+                  id: { type: "string" },
                   nama_admin: { type: "string" },
                   username: { type: "string" },
                   role: { type: "string" },
@@ -82,11 +86,11 @@ export const swaggerDocument = {
           tgl_kelulusan: { type: "string", format: "date", example: "2024-08-15" },
           program_studi: {
             type: "string",
-            enum: ["SISTEM_INFORMASI", "TEKNIK_INFORMATIKA", "MANAJEMEN_INFORMATIKA", "KOMPUTERISASI_AKUNTANSI"],
+            enum: ["ILMU_HUKUM", "MANAJEMEN", "AKUNTANSI", "ADMINISTRASI_NEGARA", "ILMU_KOMUNIKASI", "AGROTEKNOLOGI", "TEKNIK_MESIN", "TEKNIK_SIPIL", "MANAJEMEN_INFORMATIKA"],
           },
           fakultas: {
             type: "string",
-            enum: ["TEKNIK", "EKONOMI", "HUKUM", "PERTANIAN", "KEGURUAN"],
+            enum: ["HUKUM", "EKONOMI", "ILMU_SOSIAL_DAN_ILMU_POLITIK", "PERTANIAN", "TEKNIK"],
           },
           nomor_seri_ijazah: { type: "string", example: "SI-2024-001" },
           sebanyak_ijazah: { type: "number", default: 0 },
@@ -119,14 +123,18 @@ export const swaggerDocument = {
           nim: { type: "string", example: "2021002" },
           tgl_lahir: { type: "string", format: "date", example: "2001-03-10" },
           alamat_rumah: { type: "string", example: "Jl. Merdeka No. 10" },
-          semester: { type: "string", example: "6" },
+          semester: { 
+            type: "string",
+            enum: ["SEMESTER_1", "SEMESTER_2", "SEMESTER_3", "SEMESTER_4", "SEMESTER_5", "SEMESTER_6", "SEMESTER_7", "SEMESTER_8"],
+            example: "SEMESTER_5"
+          },
           program_studi: {
             type: "string",
-            enum: ["SISTEM_INFORMASI", "TEKNIK_INFORMATIKA", "MANAJEMEN_INFORMATIKA", "KOMPUTERISASI_AKUNTANSI"],
+            enum: ["ILMU_HUKUM", "MANAJEMEN", "AKUNTANSI", "ADMINISTRASI_NEGARA", "ILMU_KOMUNIKASI", "AGROTEKNOLOGI", "TEKNIK_MESIN", "TEKNIK_SIPIL", "MANAJEMEN_INFORMATIKA"],
           },
           fakultas: {
             type: "string",
-            enum: ["TEKNIK", "EKONOMI", "HUKUM", "PERTANIAN", "KEGURUAN"],
+            enum: ["HUKUM", "EKONOMI", "ILMU_SOSIAL_DAN_ILMU_POLITIK", "PERTANIAN", "TEKNIK"],
           },
           thn_akademik: { type: "string", example: "2023/2024" },
           keterangan_keperluan: { type: "string", maxLength: 300, example: "Untuk keperluan beasiswa" },
@@ -207,8 +215,8 @@ export const swaggerDocument = {
         summary: "Dapatkan daftar legalisir",
         security: [{ bearerAuth: [] }],
         parameters: [
-          { name: "page", in: "query", schema: { type: "number" } },
-          { name: "limit", in: "query", schema: { type: "number" } },
+          { name: "page", in: "query", schema: { type: "string" } },
+          { name: "limit", in: "query", schema: { type: "string" } },
           { name: "search", in: "query", schema: { type: "string" } },
         ],
         responses: {
@@ -223,7 +231,7 @@ export const swaggerDocument = {
         tags: ["Legalisir"],
         summary: "Dapatkan detail legalisir",
         security: [{ bearerAuth: [] }],
-        parameters: [{ name: "id", in: "path", required: true, schema: { type: "number" } }],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }],
         responses: {
           200: { description: "Detail legalisir" },
           404: { description: "Data tidak ditemukan" },
@@ -233,7 +241,7 @@ export const swaggerDocument = {
         tags: ["Legalisir"],
         summary: "Update legalisir",
         security: [{ bearerAuth: [] }],
-        parameters: [{ name: "id", in: "path", required: true, schema: { type: "number" } }],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }],
         requestBody: {
           required: true,
           content: {
@@ -250,7 +258,7 @@ export const swaggerDocument = {
         tags: ["Legalisir"],
         summary: "Hapus legalisir",
         security: [{ bearerAuth: [] }],
-        parameters: [{ name: "id", in: "path", required: true, schema: { type: "number" } }],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }],
         responses: {
           200: { description: "Data berhasil dihapus" },
         },
@@ -277,8 +285,8 @@ export const swaggerDocument = {
         summary: "Dapatkan daftar mahasiswa aktif",
         security: [{ bearerAuth: [] }],
         parameters: [
-          { name: "page", in: "query", schema: { type: "number" } },
-          { name: "limit", in: "query", schema: { type: "number" } },
+          { name: "page", in: "query", schema: { type: "string" } },
+          { name: "limit", in: "query", schema: { type: "string" } },
           { name: "search", in: "query", schema: { type: "string" } },
         ],
         responses: {
@@ -291,7 +299,7 @@ export const swaggerDocument = {
         tags: ["Mahasiswa Aktif"],
         summary: "Dapatkan detail mahasiswa aktif",
         security: [{ bearerAuth: [] }],
-        parameters: [{ name: "id", in: "path", required: true, schema: { type: "number" } }],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }],
         responses: {
           200: { description: "Detail mahasiswa aktif" },
           404: { description: "Data tidak ditemukan" },
@@ -301,7 +309,7 @@ export const swaggerDocument = {
         tags: ["Mahasiswa Aktif"],
         summary: "Update mahasiswa aktif",
         security: [{ bearerAuth: [] }],
-        parameters: [{ name: "id", in: "path", required: true, schema: { type: "number" } }],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }],
         requestBody: {
           required: true,
           content: {
@@ -318,9 +326,66 @@ export const swaggerDocument = {
         tags: ["Mahasiswa Aktif"],
         summary: "Hapus mahasiswa aktif",
         security: [{ bearerAuth: [] }],
-        parameters: [{ name: "id", in: "path", required: true, schema: { type: "number" } }],
+        parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }],
         responses: {
           200: { description: "Data berhasil dihapus" },
+        },
+      },
+    },
+    "/api/mahasiswa-aktif/{id}/print": {
+      get: {
+        tags: ["Mahasiswa Aktif"],
+        summary: "Cetak surat keterangan mahasiswa aktif (PDF)",
+        description: "Generate dan download PDF surat keterangan dengan 2 format berbeda: status-aktif atau beasiswa",
+        security: [{ bearerAuth: [] }],
+        parameters: [
+          { 
+            name: "id", 
+            in: "path", 
+            required: true, 
+            schema: { type: "string" },
+            description: "ID data mahasiswa aktif"
+          },
+          {
+            name: "type",
+            in: "query",
+            required: false,
+            schema: {
+              type: "string",
+              enum: ["status-aktif", "beasiswa"],
+              default: "status-aktif"
+            },
+            description: "Tipe surat yang akan dicetak"
+          }
+        ],
+        responses: {
+          200: { 
+            description: "PDF file surat keterangan",
+            content: {
+              "application/pdf": {
+                schema: {
+                  type: "string",
+                  format: "binary"
+                }
+              }
+            }
+          },
+          404: { 
+            description: "Data tidak ditemukan",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" }
+              }
+            }
+          },
+          401: {
+            description: "Unauthorized - Token tidak valid",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" }
+              }
+            }
+          }
         },
       },
     },

@@ -7,6 +7,7 @@ export function createMahasiswaAktifRoutes(mahasiswaAktifController: MahasiswaAk
 
   app.post("/", (c) => mahasiswaAktifController.create(c));
   app.get("/", authMiddleware, (c) => mahasiswaAktifController.getList(c));
+  app.get("/:id/print", authMiddleware, (c) => mahasiswaAktifController.print(c));
   app.get("/:id", authMiddleware, (c) => mahasiswaAktifController.getById(c));
   app.put("/:id", authMiddleware, (c) => mahasiswaAktifController.update(c));
   app.delete("/:id", authMiddleware, (c) => mahasiswaAktifController.delete(c));

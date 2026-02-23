@@ -1,17 +1,16 @@
 export interface Admin {
-  id_admin: number;
+  id: string;
   username: string;
   password: string;
-  nama_admin: string;
+  nama: string;
   role: string;
-  status_akun: string;
+  status: string;
   createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface AdminResponse {
-  id_admin: number;
-  nama_admin: string;
+  id: string;
+  nama: string;
   username: string;
   role: string;
 }

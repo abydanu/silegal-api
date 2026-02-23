@@ -24,8 +24,8 @@ export class PrismaLegalisirRepository implements ILegalisirRepository {
         jumlah_legalisir: data.jumlah_legalisir,
       },
     });
-    logger.info({ id: result.id_data }, "Legalisir record created successfully");
-    return result;
+    logger.info({ id: result.id }, "Legalisir record created successfully");
+    return result as Legalisir;
   }
 
   async findAll(page: number, limit: number, search: string) {
@@ -40,7 +40,7 @@ export class PrismaLegalisirRepository implements ILegalisirRepository {
         }
       : {};
 
-    const [total, data] = await Promise.all([
+    const [total, items] = await Promise.all([
       prisma.dataLegalisir.count({ where }),
       prisma.dataLegalisir.findMany({
         where,
@@ -49,21 +49,21 @@ export class PrismaLegalisirRepository implements ILegalisirRepository {
         take: limit,
       }),
     ]);
-    logger.info({ total, returned: data.length }, "Legalisir records fetched");
-    return { data, total };
+    logger.info({ total, returned: items.length }, "Legalisir records fetched");
+    return { items: items as Legalisir[], total };
   }
 
-  async findById(id: number): Promise<Legalisir | null> {
+  async findById(id: string): Promise<Legalisir | null> {
     logger.debug({ id }, "Fetching legalisir by ID");
-    const result = await prisma.dataLegalisir.findUnique({ where: { id_data: id } });
+    const result = await prisma.dataLegalisir.findUnique({ where: { id } });
     logger.info({ id, found: !!result }, "Legalisir fetch by ID completed");
-    return result;
+    return result as Legalisir | null;
   }
 
-  async update(id: number, data: Partial<CreateLegalisirDTO>): Promise<Legalisir> {
+  async update(id: string, data: Partial<CreateLegalisirDTO>): Promise<Legalisir> {
     logger.info({ id }, "Updating legalisir record");
     const result = await prisma.dataLegalisir.update({
-      where: { id_data: id },
+      where: { id },
       data: {
         ...(data.tanggal_pengajuan && { tanggal_pengajuan: new Date(data.tanggal_pengajuan) }),
         ...(data.nomor_surat && { nomor_surat: data.nomor_surat }),
@@ -82,12 +82,12 @@ export class PrismaLegalisirRepository implements ILegalisirRepository {
       },
     });
     logger.info({ id }, "Legalisir record updated successfully");
-    return result;
+    return result as Legalisir;
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: string): Promise<void> {
     logger.info({ id }, "Deleting legalisir record");
-    await prisma.dataLegalisir.delete({ where: { id_data: id } });
+    await prisma.dataLegalisir.delete({ where: { id } });
     logger.info({ id }, "Legalisir record deleted successfully");
   }
 
@@ -99,7 +99,7 @@ export class PrismaLegalisirRepository implements ILegalisirRepository {
     return await prisma.dataLegalisir.findMany({
       orderBy: { tanggal_pengajuan: "desc" },
       take: limit,
-      select: { id_data: true, nama_mahasiswa: true, nim: true, tanggal_pengajuan: true, nomor_surat: true },
+      select: { id: true, nama_mahasiswa: true, nim: true, tanggal_pengajuan: true, nomor_surat: true },
     }) as any;
   }
 }

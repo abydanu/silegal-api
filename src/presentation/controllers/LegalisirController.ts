@@ -20,13 +20,13 @@ export class LegalisirController {
       const body = await c.req.json();
       logger.info({ nim: body.nim }, "Creating legalisir request");
       const created = await this.createLegalisirUseCase.execute(body);
-      logger.info({ id: created.id_data }, "Legalisir request created");
+      logger.info({ id: created.id }, "Legalisir request created");
       return c.json(
         {
           success: true,
           message: "Permohonan berhasil dikirim",
           data: {
-            id_data: created.id_data,
+            id: created.id,
             nomor_surat: created.nomor_surat,
             nama_mahasiswa: created.nama_mahasiswa,
             createdAt: created.createdAt,
@@ -56,7 +56,7 @@ export class LegalisirController {
 
   async getById(c: Context) {
     try {
-      const id = Number(c.req.param("id"));
+      const id = c.req.param("id");
       logger.debug({ id }, "Fetching legalisir by ID");
       const item = await this.getLegalisirByIdUseCase.execute(id);
       return c.json({ success: true, data: item });
@@ -68,7 +68,7 @@ export class LegalisirController {
 
   async update(c: Context) {
     try {
-      const id = Number(c.req.param("id"));
+      const id = c.req.param("id");
       const body = await c.req.json();
       logger.info({ id }, "Updating legalisir");
       const updated = await this.updateLegalisirUseCase.execute(id, body);
@@ -83,7 +83,7 @@ export class LegalisirController {
 
   async delete(c: Context) {
     try {
-      const id = Number(c.req.param("id"));
+      const id = c.req.param("id");
       logger.info({ id }, "Deleting legalisir");
       await this.deleteLegalisirUseCase.execute(id);
       logger.info({ id }, "Legalisir deleted successfully");

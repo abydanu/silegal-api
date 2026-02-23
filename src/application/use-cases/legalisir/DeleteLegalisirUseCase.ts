@@ -3,7 +3,7 @@ import { ILegalisirRepository } from "../../../domain/repositories/ILegalisirRep
 export class DeleteLegalisirUseCase {
   constructor(private legalisirRepository: ILegalisirRepository) {}
 
-  async execute(id: number) {
+  async execute(id: string) {
     const existing = await this.legalisirRepository.findById(id);
     if (!existing) {
       throw new Error("Data tidak ditemukan");

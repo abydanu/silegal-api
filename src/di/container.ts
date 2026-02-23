@@ -12,14 +12,17 @@ import { GetMahasiswaAktifListUseCase } from "../application/use-cases/mahasiswa
 import { GetMahasiswaAktifByIdUseCase } from "../application/use-cases/mahasiswa-aktif/GetMahasiswaAktifByIdUseCase";
 import { UpdateMahasiswaAktifUseCase } from "../application/use-cases/mahasiswa-aktif/UpdateMahasiswaAktifUseCase";
 import { DeleteMahasiswaAktifUseCase } from "../application/use-cases/mahasiswa-aktif/DeleteMahasiswaAktifUseCase";
+import { PrintMahasiswaAktifUseCase } from "../application/use-cases/mahasiswa-aktif/PrintMahasiswaAktifUseCase";
 import { AuthController } from "../presentation/controllers/AuthController";
 import { LegalisirController } from "../presentation/controllers/LegalisirController";
 import { MahasiswaAktifController } from "../presentation/controllers/MahasiswaAktifController";
+import { PDFGenerator } from "../infrastructure/pdf/PDFGenerator";
 
 class Container {
   private authRepository = new PrismaAuthRepository();
   private legalisirRepository = new PrismaLegalisirRepository();
   private mahasiswaAktifRepository = new PrismaMahasiswaAktifRepository();
+  private pdfGenerator = new PDFGenerator();
 
   private loginUseCase = new LoginUseCase(this.authRepository);
 
@@ -34,6 +37,7 @@ class Container {
   private getMahasiswaAktifByIdUseCase = new GetMahasiswaAktifByIdUseCase(this.mahasiswaAktifRepository);
   private updateMahasiswaAktifUseCase = new UpdateMahasiswaAktifUseCase(this.mahasiswaAktifRepository);
   private deleteMahasiswaAktifUseCase = new DeleteMahasiswaAktifUseCase(this.mahasiswaAktifRepository);
+  private printMahasiswaAktifUseCase = new PrintMahasiswaAktifUseCase(this.mahasiswaAktifRepository, this.pdfGenerator);
 
   public authController = new AuthController(this.loginUseCase);
 
@@ -50,7 +54,8 @@ class Container {
     this.getMahasiswaAktifListUseCase,
     this.getMahasiswaAktifByIdUseCase,
     this.updateMahasiswaAktifUseCase,
-    this.deleteMahasiswaAktifUseCase
+    this.deleteMahasiswaAktifUseCase,
+    this.printMahasiswaAktifUseCase
   );
 }
 

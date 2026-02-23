@@ -3,7 +3,7 @@ import { ILegalisirRepository } from "../../../domain/repositories/ILegalisirRep
 export class GetLegalisirByIdUseCase {
   constructor(private legalisirRepository: ILegalisirRepository) {}
 
-  async execute(id: number) {
+  async execute(id: string) {
     const item = await this.legalisirRepository.findById(id);
     if (!item) {
       throw new Error("Data tidak ditemukan");

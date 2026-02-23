@@ -8,7 +8,7 @@ export class LoginUseCase {
   async execute(username: string, password: string) {
     const admin = await this.authRepository.findByUsername(username);
 
-    if (!admin || admin.status_akun === "non_aktif") {
+    if (!admin || admin.status === "non_aktif") {
       throw new Error("Username atau password salah");
     }
 
@@ -18,7 +18,7 @@ export class LoginUseCase {
     }
 
     const token = signToken({
-      id_admin: admin.id_admin,
+      id_admin: admin.id,
       username: admin.username,
       role: admin.role,
     });
@@ -26,8 +26,8 @@ export class LoginUseCase {
     return {
       token,
       admin: {
-        id_admin: admin.id_admin,
-        nama_admin: admin.nama_admin,
+        id: admin.id,
+        nama: admin.nama,
         username: admin.username,
         role: admin.role,
       },

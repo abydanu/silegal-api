@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "./generated"
 }
 
 datasource db {
@@ -38,41 +39,52 @@ enum Fakultas {
 }
 
 model Admin {
-  id_admin    Int        @id @default(autoincrement())
-  nama_admin  String     @db.VarChar(50)
-  status_akun StatusAkun @default(aktif)
-  role        String     @db.VarChar(10) @default("admin")
-  username    String     @db.VarChar(10) @unique
-  password    String     @db.VarChar(255)
-  createdAt   DateTime   @default(now())
+  id        String     @id @default(uuid())
+  nama      String     @db.VarChar(50)
+  status    StatusAkun @default(aktif)
+  role      String     @default("admin") @db.VarChar(10)
+  username  String     @unique @db.VarChar(10)
+  password  String     @db.VarChar(255)
+  createdAt DateTime   @default(now())
 
   @@map("admin")
 }
 
+enum Semester {
+  SEMESTER_1
+  SEMESTER_2
+  SEMESTER_3
+  SEMESTER_4
+  SEMESTER_5
+  SEMESTER_6
+  SEMESTER_7
+  SEMESTER_8
+}
+
 model DataLegalisir {
-  id_data           Int          @id @default(autoincrement())
-  tanggal_pengajuan DateTime     @db.Date
-  nomor_surat       String       @db.VarChar(50)
-  nama_mahasiswa    String       @db.VarChar(50)
-  tempat_lahir      String       @db.VarChar(15)
-  nim               String       @db.VarChar(15)
-  tgl_lahir         DateTime     @db.Date
-  tgl_kelulusan     DateTime     @db.Date
-  program_studi     ProgramStudi
-  fakultas          Fakultas
-  nomor_seri_ijazah String       @db.VarChar(20)
-  sebanyak_ijazah   Int          @default(0)
-  sebanyak_transkip Int          @default(0)
-  sebanyak_akreditasi Int        @default(0)
-  jumlah_legalisir  Int
-  createdAt         DateTime     @default(now())
-  updatedAt         DateTime     @updatedAt
+  id                  String       @id @default(uuid())
+  tanggal_pengajuan   DateTime     @db.Date
+  nomor_surat         String       @db.VarChar(50)
+  nama_mahasiswa      String       @db.VarChar(50)
+  tempat_lahir        String       @db.VarChar(15)
+  nim                 String       @db.VarChar(15)
+  tgl_lahir           DateTime     @db.Date
+  tgl_kelulusan       DateTime     @db.Date
+  program_studi       ProgramStudi
+  fakultas            Fakultas
+  nomor_seri_ijazah   String       @db.VarChar(20)
+  sebanyak_ijazah     Int          @default(0)
+  sebanyak_transkip   Int          @default(0)
+  sebanyak_akreditasi Int          @default(0)
+  jumlah_legalisir    Int
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
 
   @@map("data_legalisir")
 }
 
 model DataPengajuan {
-  id_data              Int          @id @default(autoincrement())
+  id                   String       @id @default(uuid())
   tanggal_pengajuan    DateTime     @db.Date
   nomor_surat          String       @db.VarChar(50)
   nama_mahasiswa       String       @db.VarChar(50)
@@ -80,7 +92,7 @@ model DataPengajuan {
   nim                  String       @db.VarChar(15)
   tgl_lahir            DateTime     @db.Date
   alamat_rumah         String       @db.VarChar(50)
-  semester             String       @db.VarChar(10)
+  semester             Semester
   program_studi        ProgramStudi
   fakultas             Fakultas
   thn_akademik         String       @db.VarChar(25)

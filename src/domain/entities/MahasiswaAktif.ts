@@ -1,5 +1,5 @@
 export interface MahasiswaAktif {
-  id_data: number;
+  id: string;
   tanggal_pengajuan: Date;
   nomor_surat: string;
   nama_mahasiswa: string;

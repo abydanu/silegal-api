@@ -2,7 +2,7 @@
 node_modules/
 
 # Prisma
-/src/generated/prisma
+/prisma/generated
 
 # Environment
 .env

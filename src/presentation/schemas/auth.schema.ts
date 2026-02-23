@@ -11,7 +11,7 @@ export const LoginResponseSchema = z.object({
   data: z.object({
     token: z.string(),
     admin: z.object({
-      id_admin: z.number(),
+      id: z.string(),
       nama_admin: z.string(),
       username: z.string(),
       role: z.string(),

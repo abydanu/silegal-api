@@ -6,9 +6,6 @@ export class PrismaAuthRepository implements IAuthRepository {
   async findByUsername(username: string): Promise<Admin | null> {
     const admin = await prisma.admin.findUnique({ where: { username } });
     if (!admin) return null;
-    return {
-      ...admin,
-      updatedAt: admin.createdAt,
-    };
+    return admin as unknown as Admin;
   }
 }
