@@ -1,5 +1,5 @@
-import { IMahasiswaAktifRepository } from "../../../domain/repositories/IMahasiswaAktifRepository";
-import { CreateMahasiswaAktifDTO } from "../../../domain/entities/MahasiswaAktif";
+import { IMahasiswaAktifRepository } from "../../../domain/repositories/IMahasiswaAktifRepository.js";
+import { CreateMahasiswaAktifDTO } from "../../../domain/entities/MahasiswaAktif.js";
 
 export class UpdateMahasiswaAktifUseCase {
   constructor(private mahasiswaAktifRepository: IMahasiswaAktifRepository) {}

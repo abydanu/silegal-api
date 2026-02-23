@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import { prisma } from "../../src/infrastructure/database/prisma";
-import { ProgramStudi, Fakultas } from "@prisma/client";
-import { Semester } from "../generated";
+import { Fakultas, ProgramStudi, Semester } from "../../src/infrastructure/database/generated";
 
 async function main() {
   console.log("🌱 Starting seed...");

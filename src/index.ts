@@ -4,12 +4,12 @@ import { cors } from "hono/cors";
 import { logger as honoLogger } from "hono/logger";
 import { swaggerUI } from "@hono/swagger-ui";
 
-import logger from "./infrastructure/logging/logger";
-import { container } from "./di/container";
-import { createAuthRoutes } from "./presentation/routes/auth.routes";
-import { createLegalisirRoutes } from "./presentation/routes/legalisir.routes";
-import { createMahasiswaAktifRoutes } from "./presentation/routes/mahasiswaAktif.routes";
-import { swaggerDocument } from "./presentation/openapi/swagger";
+import logger from "./infrastructure/logging/logger.js";
+import { container } from "./di/container.js";
+import { createAuthRoutes } from "./presentation/routes/auth.routes.js";
+import { createLegalisirRoutes } from "./presentation/routes/legalisir.routes.js";
+import { createMahasiswaAktifRoutes } from "./presentation/routes/mahasiswaAktif.routes.js";
+import { swaggerDocument } from "./presentation/openapi/swagger.js";
 
 const app = new Hono();
 

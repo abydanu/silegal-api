@@ -1,8 +1,8 @@
-import { IMahasiswaAktifRepository } from "../../domain/repositories/IMahasiswaAktifRepository";
-import { MahasiswaAktif, CreateMahasiswaAktifDTO } from "../../domain/entities/MahasiswaAktif";
-import { prisma } from "../database/prisma";
-import logger from "../logging/logger";
-import { Semester } from "prisma/generated";
+import { IMahasiswaAktifRepository } from "../../domain/repositories/IMahasiswaAktifRepository.js";
+import { MahasiswaAktif, CreateMahasiswaAktifDTO } from "../../domain/entities/MahasiswaAktif.js";
+import { prisma } from "../database/prisma.js";
+import logger from "../logging/logger.js";
+import { Semester } from "../../infrastructure/database/generated";
 
 export class PrismaMahasiswaAktifRepository implements IMahasiswaAktifRepository {
   async create(data: CreateMahasiswaAktifDTO): Promise<MahasiswaAktif> {

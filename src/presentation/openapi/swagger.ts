@@ -7,13 +7,17 @@ export const swaggerDocument = {
   },
   servers: [
     {
-      url: "http://localhost:5000",
-      description: "Local server",
+      url: "https://silegal-api.vercel.app",
+      description: "Production server",
     },
     ...(process.env.SKIP_NGROK !== "true" ? [{
       url: "https://suited-enormously-donkey.ngrok-free.app",
       description: "Development server",
     }] : []),
+    {
+      url: "http://localhost:5000",
+      description: "Local server",
+    },
   ],
   components: {
     securitySchemes: {
@@ -123,7 +127,7 @@ export const swaggerDocument = {
           nim: { type: "string", example: "2021002" },
           tgl_lahir: { type: "string", format: "date", example: "2001-03-10" },
           alamat_rumah: { type: "string", example: "Jl. Merdeka No. 10" },
-          semester: { 
+          semester: {
             type: "string",
             enum: ["SEMESTER_1", "SEMESTER_2", "SEMESTER_3", "SEMESTER_4", "SEMESTER_5", "SEMESTER_6", "SEMESTER_7", "SEMESTER_8"],
             example: "SEMESTER_5"
@@ -339,10 +343,10 @@ export const swaggerDocument = {
         description: "Generate dan download PDF surat keterangan dengan 2 format berbeda: status-aktif atau beasiswa",
         security: [{ bearerAuth: [] }],
         parameters: [
-          { 
-            name: "id", 
-            in: "path", 
-            required: true, 
+          {
+            name: "id",
+            in: "path",
+            required: true,
             schema: { type: "string" },
             description: "ID data mahasiswa aktif"
           },
@@ -359,7 +363,7 @@ export const swaggerDocument = {
           }
         ],
         responses: {
-          200: { 
+          200: {
             description: "PDF file surat keterangan",
             content: {
               "application/pdf": {
@@ -370,7 +374,7 @@ export const swaggerDocument = {
               }
             }
           },
-          404: { 
+          404: {
             description: "Data tidak ditemukan",
             content: {
               "application/json": {

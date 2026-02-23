@@ -1,5 +1,5 @@
 import { Context, Next } from "hono";
-import { verifyToken } from "../../infrastructure/jwt/JwtService";
+import { verifyToken } from "../../infrastructure/jwt/JwtService.js";
 
 export async function authMiddleware(c: Context, next: Next) {
   try {

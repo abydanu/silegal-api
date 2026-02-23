@@ -1,10 +1,10 @@
 import { Context } from "hono";
-import { CreateLegalisirUseCase } from "../../application/use-cases/legalisir/CreateLegalisirUseCase";
-import { GetLegalisirListUseCase } from "../../application/use-cases/legalisir/GetLegalisirListUseCase";
-import { GetLegalisirByIdUseCase } from "../../application/use-cases/legalisir/GetLegalisirByIdUseCase";
-import { UpdateLegalisirUseCase } from "../../application/use-cases/legalisir/UpdateLegalisirUseCase";
-import { DeleteLegalisirUseCase } from "../../application/use-cases/legalisir/DeleteLegalisirUseCase";
-import logger from "../../infrastructure/logging/logger";
+import { CreateLegalisirUseCase } from "../../application/use-cases/legalisir/CreateLegalisirUseCase.js";
+import { GetLegalisirListUseCase } from "../../application/use-cases/legalisir/GetLegalisirListUseCase.js";
+import { GetLegalisirByIdUseCase } from "../../application/use-cases/legalisir/GetLegalisirByIdUseCase.js";
+import { UpdateLegalisirUseCase } from "../../application/use-cases/legalisir/UpdateLegalisirUseCase.js";
+import { DeleteLegalisirUseCase } from "../../application/use-cases/legalisir/DeleteLegalisirUseCase.js";
+import logger from "../../infrastructure/logging/logger.js";
 
 export class LegalisirController {
   constructor(

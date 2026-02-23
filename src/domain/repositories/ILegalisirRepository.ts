@@ -1,4 +1,4 @@
-import { Legalisir, CreateLegalisirDTO } from "../entities/Legalisir";
+import { Legalisir, CreateLegalisirDTO } from "../entities/Legalisir.js";
 
 export interface ILegalisirRepository {
   create(data: CreateLegalisirDTO): Promise<Legalisir>;

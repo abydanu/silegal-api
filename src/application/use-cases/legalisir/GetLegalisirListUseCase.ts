@@ -1,4 +1,4 @@
-import { ILegalisirRepository } from "../../../domain/repositories/ILegalisirRepository";
+import { ILegalisirRepository } from "../../../domain/repositories/ILegalisirRepository.js";
 
 export class GetLegalisirListUseCase {
   constructor(private legalisirRepository: ILegalisirRepository) {}

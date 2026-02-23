@@ -1,7 +1,7 @@
-import { ILegalisirRepository } from "../../domain/repositories/ILegalisirRepository";
-import { Legalisir, CreateLegalisirDTO } from "../../domain/entities/Legalisir";
-import { prisma } from "../database/prisma";
-import logger from "../logging/logger";
+import { ILegalisirRepository } from "../../domain/repositories/ILegalisirRepository.js";
+import { Legalisir, CreateLegalisirDTO } from "../../domain/entities/Legalisir.js";
+import { prisma } from "../database/prisma.js";
+import logger from "../logging/logger.js";
 
 export class PrismaLegalisirRepository implements ILegalisirRepository {
   async create(data: CreateLegalisirDTO): Promise<Legalisir> {

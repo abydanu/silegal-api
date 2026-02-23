@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { MahasiswaAktifController } from "../controllers/MahasiswaAktifController";
-import { authMiddleware } from "../middleware/auth.middleware";
+import { MahasiswaAktifController } from "../controllers/MahasiswaAktifController.js";
+import { authMiddleware } from "../middleware/auth.middleware.js";
 
 export function createMahasiswaAktifRoutes(mahasiswaAktifController: MahasiswaAktifController) {
   const app = new Hono();

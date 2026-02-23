@@ -38,3 +38,5 @@ coverage/
 
 # Misc
 .turbo/
+.vercel
+.env*.local

@@ -2,14 +2,14 @@
   "name": "api-silegal",
   "scripts": {
     "dev": "bun run --watch dev.ts",
-    "build": "bun build src/index.ts --outdir dist --target node",
+    "build": "tsc",
+    "build:vercel": "bun build ./src/index.ts --outdir ./dist --target node --external prisma --external @prisma/client",
     "start": "node dist/index.js",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate deploy",
     "db:studio": "prisma studio",
-    "db:seed": "bun run prisma/seed/seed.ts",
-    "vercel-build": "prisma generate"
+    "db:seed": "bun run prisma/seed/seed.ts"
   },
   "type": "module",
   "dependencies": {

@@ -1,11 +1,11 @@
 import { Context } from "hono";
-import { CreateMahasiswaAktifUseCase } from "../../application/use-cases/mahasiswa-aktif/CreateMahasiswaAktifUseCase";
-import { GetMahasiswaAktifListUseCase } from "../../application/use-cases/mahasiswa-aktif/GetMahasiswaAktifListUseCase";
-import { GetMahasiswaAktifByIdUseCase } from "../../application/use-cases/mahasiswa-aktif/GetMahasiswaAktifByIdUseCase";
-import { UpdateMahasiswaAktifUseCase } from "../../application/use-cases/mahasiswa-aktif/UpdateMahasiswaAktifUseCase";
-import { DeleteMahasiswaAktifUseCase } from "../../application/use-cases/mahasiswa-aktif/DeleteMahasiswaAktifUseCase";
-import { PrintMahasiswaAktifUseCase, PrintType } from "../../application/use-cases/mahasiswa-aktif/PrintMahasiswaAktifUseCase";
-import logger from "../../infrastructure/logging/logger";
+import { CreateMahasiswaAktifUseCase } from "../../application/use-cases/mahasiswa-aktif/CreateMahasiswaAktifUseCase.js";
+import { GetMahasiswaAktifListUseCase } from "../../application/use-cases/mahasiswa-aktif/GetMahasiswaAktifListUseCase.js";
+import { GetMahasiswaAktifByIdUseCase } from "../../application/use-cases/mahasiswa-aktif/GetMahasiswaAktifByIdUseCase.js";
+import { UpdateMahasiswaAktifUseCase } from "../../application/use-cases/mahasiswa-aktif/UpdateMahasiswaAktifUseCase.js";
+import { DeleteMahasiswaAktifUseCase } from "../../application/use-cases/mahasiswa-aktif/DeleteMahasiswaAktifUseCase.js";
+import { PrintMahasiswaAktifUseCase, PrintType } from "../../application/use-cases/mahasiswa-aktif/PrintMahasiswaAktifUseCase.js";
+import logger from "../../infrastructure/logging/logger.js";
 
 export class MahasiswaAktifController {
   constructor(

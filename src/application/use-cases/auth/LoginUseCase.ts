@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
-import { IAuthRepository } from "../../../domain/repositories/IAuthRepository";
-import { signToken } from "../../../infrastructure/jwt/JwtService";
+import { IAuthRepository } from "../../../domain/repositories/IAuthRepository.js";
+import { signToken } from "../../../infrastructure/jwt/JwtService.js";
 
 export class LoginUseCase {
   constructor(private authRepository: IAuthRepository) {}

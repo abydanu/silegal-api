@@ -1,4 +1,4 @@
-import { MahasiswaAktif, CreateMahasiswaAktifDTO } from "../entities/MahasiswaAktif";
+import { MahasiswaAktif, CreateMahasiswaAktifDTO } from "../entities/MahasiswaAktif.js";
 
 export interface IMahasiswaAktifRepository {
   create(data: CreateMahasiswaAktifDTO): Promise<MahasiswaAktif>;

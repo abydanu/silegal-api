@@ -1,5 +1,5 @@
-import { IMahasiswaAktifRepository } from "../../../domain/repositories/IMahasiswaAktifRepository";
-import { PDFGenerator } from "../../../infrastructure/pdf/PDFGenerator";
+import { IMahasiswaAktifRepository } from "../../../domain/repositories/IMahasiswaAktifRepository.js";
+import { PDFGenerator } from "../../../infrastructure/pdf/PDFGenerator.js";
 
 export type PrintType = "status-aktif" | "beasiswa";
 

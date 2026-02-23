@@ -1,5 +1,5 @@
-import { ILegalisirRepository } from "../../../domain/repositories/ILegalisirRepository";
-import { CreateLegalisirDTO } from "../../../domain/entities/Legalisir";
+import { ILegalisirRepository } from "../../../domain/repositories/ILegalisirRepository.js";
+import { CreateLegalisirDTO } from "../../../domain/entities/Legalisir.js";
 
 export class UpdateLegalisirUseCase {
   constructor(private legalisirRepository: ILegalisirRepository) {}

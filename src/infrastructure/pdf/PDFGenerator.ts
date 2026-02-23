@@ -1,5 +1,5 @@
 import PDFDocument from "pdfkit";
-import { MahasiswaAktif } from "../../domain/entities/MahasiswaAktif";
+import { MahasiswaAktif } from "../../domain/entities/MahasiswaAktif.js";
 
 export class PDFGenerator {
   private formatDate(date: Date): string {
@@ -23,7 +23,6 @@ export class PDFGenerator {
     return semester.replace("SEMESTER_", "");
   }
 
-
   generateStatusAktif(data: MahasiswaAktif): Promise<Buffer> {
     return new Promise((resolve, reject) => {
       try {
@@ -34,14 +33,8 @@ export class PDFGenerator {
         doc.on("end", () => resolve(Buffer.concat(chunks)));
         doc.on("error", reject);
 
-
-
         const pageWidth = 595.28;
         const centerX = pageWidth / 2;
-
-
-
-
 
         doc.fontSize(16).font("Helvetica-Bold").text("UNIVERSITAS MERDEKA MADIUN", centerX - 200, 60, {
           width: 400,

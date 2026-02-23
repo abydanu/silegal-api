@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { LegalisirController } from "../controllers/LegalisirController";
-import { authMiddleware } from "../middleware/auth.middleware";
+import { LegalisirController } from "../controllers/LegalisirController.js";
+import { authMiddleware } from "../middleware/auth.middleware.js";
 
 export function createLegalisirRoutes(legalisirController: LegalisirController) {
   const app = new Hono();

@@ -1,4 +1,4 @@
-import { IMahasiswaAktifRepository } from "../../../domain/repositories/IMahasiswaAktifRepository";
+import { IMahasiswaAktifRepository } from "../../../domain/repositories/IMahasiswaAktifRepository.js";
 
 export class GetMahasiswaAktifListUseCase {
   constructor(private mahasiswaAktifRepository: IMahasiswaAktifRepository) {}

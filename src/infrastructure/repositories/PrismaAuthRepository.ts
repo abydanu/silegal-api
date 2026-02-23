@@ -1,6 +1,6 @@
-import { IAuthRepository } from "../../domain/repositories/IAuthRepository";
-import { Admin } from "../../domain/entities/Admin";
-import { prisma } from "../database/prisma";
+import { IAuthRepository } from "../../domain/repositories/IAuthRepository.js";
+import { Admin } from "../../domain/entities/Admin.js";
+import { prisma } from "../database/prisma.js";
 
 export class PrismaAuthRepository implements IAuthRepository {
   async findByUsername(username: string): Promise<Admin | null> {

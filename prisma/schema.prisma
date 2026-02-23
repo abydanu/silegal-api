@@ -1,41 +1,9 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated"
 }
 
 datasource db {
   provider = "postgresql"
-}
-
-enum StatusAkun {
-  aktif
-  non_aktif
-}
-
-enum ProgramStudi {
-  ILMU_HUKUM
-  MANAJEMEN
-  AKUNTANSI
-  ADMINISTRASI_NEGARA
-  ILMU_KOMUNIKASI
-  AGROTEKNOLOGI
-  TEKNIK_MESIN
-  TEKNIK_SIPIL
-  MANAJEMEN_INFORMATIKA
-}
-
-enum Fakultas {
-  HUKUM
-  EKONOMI
-  ILMU_SOSIAL_DAN_ILMU_POLITIK
-  PERTANIAN
-  TEKNIK
 }
 
 model Admin {
@@ -48,17 +16,6 @@ model Admin {
   createdAt DateTime   @default(now())
 
   @@map("admin")
-}
-
-enum Semester {
-  SEMESTER_1
-  SEMESTER_2
-  SEMESTER_3
-  SEMESTER_4
-  SEMESTER_5
-  SEMESTER_6
-  SEMESTER_7
-  SEMESTER_8
 }
 
 model DataLegalisir {
@@ -101,4 +58,40 @@ model DataPengajuan {
   updatedAt            DateTime     @updatedAt
 
   @@map("data_pengajuan")
+}
+
+enum StatusAkun {
+  aktif
+  non_aktif
+}
+
+enum ProgramStudi {
+  ILMU_HUKUM
+  MANAJEMEN
+  AKUNTANSI
+  ADMINISTRASI_NEGARA
+  ILMU_KOMUNIKASI
+  AGROTEKNOLOGI
+  TEKNIK_MESIN
+  TEKNIK_SIPIL
+  MANAJEMEN_INFORMATIKA
+}
+
+enum Fakultas {
+  HUKUM
+  EKONOMI
+  ILMU_SOSIAL_DAN_ILMU_POLITIK
+  PERTANIAN
+  TEKNIK
+}
+
+enum Semester {
+  SEMESTER_1
+  SEMESTER_2
+  SEMESTER_3
+  SEMESTER_4
+  SEMESTER_5
+  SEMESTER_6
+  SEMESTER_7
+  SEMESTER_8
 }

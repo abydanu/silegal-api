@@ -1,6 +1,6 @@
 import { Context } from "hono";
-import { LoginUseCase } from "../../application/use-cases/auth/LoginUseCase";
-import logger from "../../infrastructure/logging/logger";
+import { LoginUseCase } from "../../application/use-cases/auth/LoginUseCase.js";
+import logger from "../../infrastructure/logging/logger.js";
 
 export class AuthController {
   constructor(private loginUseCase: LoginUseCase) {}
