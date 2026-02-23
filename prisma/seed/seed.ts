@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { prisma } from "../../src/infrastructure/database/prisma";
-import { Fakultas, ProgramStudi, Semester } from "../../src/infrastructure/database/generated";
+import { Fakultas, ProgramStudi, Semester,  } from "../../src/infrastructure/database/generated";
 
 async function main() {
   console.log("🌱 Starting seed...");
@@ -10,30 +10,18 @@ async function main() {
   await prisma.dataLegalisir.deleteMany();
   await prisma.admin.deleteMany();
 
-  console.log("👤 Seeding admin users...");
-  const hashedPassword = await bcrypt.hash("admin123", 10);
+  console.log("👤 Seeding admin");
+  const hashedPassword = await bcrypt.hash("admin", 10);
 
   await prisma.admin.create({
     data: {
-      nama: "Admin Utama",
-      username: "admin",
+      nama: "Staff Akademik",
+      username: "johanes",
       password: hashedPassword,
       status: "aktif",
-      role: "admin",
+      role: "ADMIN",
     },
   });
-
-  await prisma.admin.create({
-    data: {
-      nama: "Admin Backup",
-      username: "admin2",
-      password: await bcrypt.hash("admin456", 10),
-      status: "aktif",
-      role: "admin",
-    },
-  });
-
-  console.log("✅ Created 2 admin users");
 
   console.log("📄 Seeding legalisir data...");
 
@@ -387,10 +375,8 @@ async function main() {
 
   console.log("\n🎉 Seed completed successfully!");
   console.log("\n📋 Login credentials:");
-  console.log("   Username: admin");
-  console.log("   Password: admin123");
-  console.log("\n   Username: admin2");
-  console.log("   Password: admin456");
+  console.log("   Username: johanes");
+  console.log("   Password: admin");
 }
 
 main()
