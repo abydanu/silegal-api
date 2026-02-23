@@ -2,7 +2,7 @@
 node_modules/
 
 # Prisma
-/prisma/generated
+/src/infrastructure/database/generated
 
 # Environment
 .env
@@ -26,6 +26,7 @@ lerna-debug.log*
 .DS_Store
 Thumbs.db
 
+api.backup/
 # IDE
 .vscode/
 .idea/
