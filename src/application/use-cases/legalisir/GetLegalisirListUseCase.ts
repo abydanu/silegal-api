@@ -4,9 +4,9 @@ export class GetLegalisirListUseCase {
   constructor(private legalisirRepository: ILegalisirRepository) {}
 
   async execute(page: number, limit: number, search: string) {
-    const { data, total } = await this.legalisirRepository.findAll(page, limit, search);
+    const { items, total } = await this.legalisirRepository.findAll(page, limit, search);
     return {
-      data,
+      data: items,
       meta: {
         total,
         page,
